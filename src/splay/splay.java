@@ -13,17 +13,20 @@ public class splay {
 		int height=800;
 		
 		JFrame frame=new JFrame();
+		frame.setUndecorated(false);
+		frame.setVisible(true);
+		frame.getContentPane().setLayout(null);
 		frame.setSize(width+15, height+39);
 		frame.setLocation(15,39);
-		frame.setUndecorated(false);
-		frame.getContentPane().setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
+		
+		PaperPanel plaincontainer;
+		
 		JPanel paper=new JPanel();
 		paper.setVisible(true);
+		paper.setLayout(null);
 		paper.setSize(width, height);
 		paper.setBackground(Color.decode("#e5e5e5"));
-		paper.setLayout(null);
 		paper.setLocation(0, 0);
 		
 		JPanel plain=new JPanel();
@@ -45,8 +48,8 @@ public class splay {
 		
 		JPanel title=new JPanel();
 		title.setVisible(true);
-		title.setBackground(Color.decode("#3f51b5"));
 		title.setLayout(null);
+		title.setBackground(Color.decode("#3f51b5"));
 		title.setSize(width, 210);
 		title.setLocation(0,0);
 		

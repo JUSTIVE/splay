@@ -22,15 +22,15 @@ public class Circle extends JPanel{
 		ga.fill(circle);
 		repaint();
 		*/
+		//ga.setRenderingHints(Graphics2D.ANTIALIASING,Graphics2D.ANTIALIAS_ON);
+		//RenderingHints rh = new RenderingHints(
 		super.paintComponent(graphics);
 		graphics.fillOval(0,0, 87, 87);
 		Graphics2D ga=(Graphics2D)graphics;
-		//RenderingHints rh = new RenderingHints(
-	            
-	    ga.setRenderingHint( RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-	    
-		//ga.setRenderingHints(Graphics2D.ANTIALIASING,Graphics2D.ANTIALIAS_ON);
+		ga.setRenderingHint( RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+	    ga.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 		setForeground(Color.decode("#ef5350"));
 		setBackground(new Color(00,00,00,00));
+		super.paintComponent(ga);
 	}
 }
