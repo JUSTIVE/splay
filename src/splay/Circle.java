@@ -12,6 +12,11 @@ public class Circle extends JPanel{
 	{
 		this.color=color;
 	}
+	public void SetColor(Color c)
+	{
+		this.color=c;
+		repaint();
+	}
 	public void paintComponent(Graphics graphics)
 	{
 		super.paintComponent(graphics);

@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -42,13 +41,13 @@ class CirclePanel extends JPanel
 		setVisible(true);
 		setSize(width,height+2);
 		setLayout(null);
+		setBackground(new Color(0,0,0,0));
 		Circle shadow=new Circle(new Color(0,0,0,77));
 		shadow.setVisible(true);
 		shadow.setSize(width,height);
 		shadow.setLocation(0,2);
 		super.add(shadow,-1,0);
 	}
-	
 }
 
 class IconPanel extends JPanel{
@@ -63,14 +62,20 @@ class IconPanel extends JPanel{
 			image = ImageIO.read(new File(location));
 		}
 		catch(IOException ex){}
-		//repaint();
+		repaint();
 	}
 	public void paint(Graphics G)
 	{
 		super.paintComponents(G);
 		setBackground(new Color(0,0,0,0));
-		setForeground(Color.decode("#ef5350"));
 		G.drawImage(image,0,0,this.getWidth(),this.getHeight(), this);
+	}
+	
+	@Override
+	public void paintComponent(Graphics G)
+	{
+		super.paintComponent(G);
+		
 	}
 	
 }
