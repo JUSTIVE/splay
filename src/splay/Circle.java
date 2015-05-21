@@ -15,7 +15,11 @@ public class Circle extends JPanel{
 	public void SetColor(Color c)
 	{
 		this.color=c;
+<<<<<<< HEAD
 		//repaint();
+=======
+		repaint();
+>>>>>>> origin/master
 	}
 	public void paintComponent(Graphics graphics)
 	{

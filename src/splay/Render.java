@@ -10,8 +10,11 @@ import javax.swing.JPanel;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+<<<<<<< HEAD
 import java.awt.event.MouseMotionAdapter;
 import java.rmi.server.LogStream;
+=======
+>>>>>>> origin/master
 public class Render {
 	public JFrame mainframe;
 	public JFrame logoframe;
@@ -23,6 +26,7 @@ public class Render {
 	Render(){
 		level=0;
 		mainframe=new JFrame();
+<<<<<<< HEAD
 		logoframe=new JFrame();
 		posX=16;
 		posY=39;
@@ -65,12 +69,33 @@ public class Render {
 	public void drawmain()
 	{	
 		mainframe.setUndecorated(true);
+=======
+		mainframe.setUndecorated(false);
+>>>>>>> origin/master
 		mainframe.setResizable(false);
 		mainframe.setVisible(true);
 		mainframe.getContentPane().setLayout(null);
 		mainframe.setSize(width, height);
 		mainframe.setLocation(Px,Py);
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+<<<<<<< HEAD
+=======
+	}
+	public void draw()
+	{
+		while(true)
+		{
+			switch(level)
+			{
+			case 0:
+				drawmain();
+				break;
+			}
+		}
+	}
+	public void drawmain()
+	{	
+>>>>>>> origin/master
 		PaperPanel titlecontainer=new PaperPanel(width,210);
 		titlecontainer.setLocation(0, 0);
 			
@@ -217,8 +242,13 @@ public class Render {
 			{
 				Circle btn=(Circle)e.getSource();
 				btn.SetColor(Color.decode("#C62828"));
+<<<<<<< HEAD
 				btn.repaint();
 				//TODO:: clear background glitter
+=======
+				btn.setBackground(new Color(0,0,0,0));
+				//btn.get
+>>>>>>> origin/master
 			}
 		}
 		public void mouseReleased(MouseEvent e)
@@ -227,6 +257,7 @@ public class Render {
 			{
 				Circle btn=(Circle)e.getSource();
 				btn.SetColor(Color.decode("#ef5350"));
+<<<<<<< HEAD
 				btn.setBackground(new Color(0,0,0,0));
 				mainframe.dispose();
 				System.exit(1);
@@ -272,6 +303,10 @@ public class Render {
 			//target.setLocation(posX+evt.getX()-Px,posY+evt.getY()-Py);
 			posX=target.getLocation().x;
 			posX=target.getLocation().y;
+=======
+				mainframe.dispose();
+			}
+>>>>>>> origin/master
 		}
 	}
 }

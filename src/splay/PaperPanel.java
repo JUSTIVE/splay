@@ -35,6 +35,24 @@ public class PaperPanel extends JPanel{
 	}
 }
 
+<<<<<<< HEAD
+=======
+class CirclePanel extends JPanel
+{
+	public CirclePanel(int width,int height){
+		setVisible(true);
+		setSize(width,height+2);
+		setLayout(null);
+		setBackground(new Color(0,0,0,0));
+		Circle shadow=new Circle(new Color(0,0,0,77));
+		shadow.setVisible(true);
+		shadow.setSize(width,height);
+		shadow.setLocation(0,2);
+		super.add(shadow,-1,0);
+	}
+}
+
+>>>>>>> origin/master
 class IconPanel extends JPanel{
 	private Image image;
 	int width,height;
@@ -55,6 +73,13 @@ class IconPanel extends JPanel{
 		setBackground(new Color(0,0,0,0));
 		G.drawImage(image,0,0,this.getWidth(),this.getHeight(), this);
 	}
+	@Override
+	public void paintComponent(Graphics G)
+	{
+		super.paintComponent(G);
+		
+	}
+	
 	@Override
 	public void paintComponent(Graphics G)
 	{

@@ -6,6 +6,10 @@ import javax.swing.*;
 public class splay {
 	public static void main(String []args){
 		Render r=new Render();
+<<<<<<< HEAD
 		r.draw();
+=======
+		r.drawmain();
+>>>>>>> origin/master
 	}
 }
