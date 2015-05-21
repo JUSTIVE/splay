@@ -13,12 +13,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 final class Shadow extends JPanel{ 
+	private int depth;
+	public Shadow()
+	{
+		depth=6;
+	}
+	public void setDepth(int depth)
+	{
+		this.depth=depth;
+	}
 	protected void paintComponent(Graphics g){
 		super.paintComponents(g);
 		Graphics2D g2d=(Graphics2D)g;
-		GradientPaint gp=new GradientPaint(0, 0, new Color(0,0,0,77), 0,6,new Color(0,0,0,0));
+		GradientPaint gp=new GradientPaint(0, 0, new Color(0,0,0,77), 0,depth,new Color(0,0,0,0));
 		g2d.setPaint(gp);
-		g2d.fillRect(0, 0, super.getWidth(), 6);
+		g2d.fillRect(0, 0, super.getWidth(), depth);
 	}
 }
 
@@ -33,34 +42,42 @@ public class PaperPanel extends JPanel{
 		shadow.setLocation(0,height);
 		add(shadow);
 	}
-}
-
-<<<<<<< HEAD
-=======
-class CirclePanel extends JPanel
-{
-	public CirclePanel(int width,int height){
+	public PaperPanel(int width,int height,int depth){
 		setVisible(true);
-		setSize(width,height+2);
+		setSize(width, height+depth);
 		setLayout(null);
-		setBackground(new Color(0,0,0,0));
-		Circle shadow=new Circle(new Color(0,0,0,77));
+		Shadow shadow=new Shadow();
 		shadow.setVisible(true);
-		shadow.setSize(width,height);
-		shadow.setLocation(0,2);
-		super.add(shadow,-1,0);
+		shadow.setDepth(depth);
+		shadow.setSize(width,depth);
+		shadow.setLocation(0,height);
+		add(shadow);
 	}
 }
 
->>>>>>> origin/master
 class IconPanel extends JPanel{
 	private Image image;
 	int width,height;
+	Color bColor;
 	public IconPanel(String location,int width,int height)
 	{
 		this.width=width;
 		this.height=height;
 		setSize(height,width);
+		setBackground(new Color(0,0,0,0));
+		try{
+			image = ImageIO.read(new File(location));
+		}
+		catch(IOException ex){}
+		repaint();
+	}
+	public IconPanel(String location,int width,int height,Color bColor)
+	{
+		this.width=width;
+		this.height=height;
+		this.bColor=bColor;
+		setSize(height,width);
+		setBackground(bColor);
 		try{
 			image = ImageIO.read(new File(location));
 		}
@@ -70,21 +87,16 @@ class IconPanel extends JPanel{
 	public void paint(Graphics G)
 	{
 		super.paintComponents(G);
-		setBackground(new Color(0,0,0,0));
+		
 		G.drawImage(image,0,0,this.getWidth(),this.getHeight(), this);
 	}
 	@Override
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
+		setBackground(new Color(0,0,0,0));
 		
 	}
 	
-	@Override
-	public void paintComponent(Graphics G)
-	{
-		super.paintComponent(G);
-		
-	}
 	
 }

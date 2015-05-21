@@ -15,11 +15,7 @@ public class Circle extends JPanel{
 	public void SetColor(Color c)
 	{
 		this.color=c;
-<<<<<<< HEAD
 		//repaint();
-=======
-		repaint();
->>>>>>> origin/master
 	}
 	public void paintComponent(Graphics graphics)
 	{
@@ -37,13 +33,13 @@ class CirclePanel extends JPanel
 {
 	public CirclePanel(int width,int height){
 		setVisible(true);
-		setSize(width,height+2);
+		setSize(width,height+3);
 		setLayout(null);
 		setBackground(new Color(0,0,0,0));
 		Circle shadow=new Circle(new Color(0,0,0,77));
 		shadow.setVisible(true);
-		shadow.setSize(width,height);
-		shadow.setLocation(0,2);
+		shadow.setSize(width-3,height);
+		shadow.setLocation(0,3);
 		super.add(shadow,-1,0);
 	}
 }
