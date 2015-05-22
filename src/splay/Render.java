@@ -8,50 +8,44 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.RepaintManager;
 
-<<<<<<< HEAD
-import java.awt.Image;
-=======
->>>>>>> origin/master
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 public class Render {
-	public JFrame playmenu;
-	public JFrame mainframe;
-	public JFrame logoframe;
-	public int width=600;
-	public int height=800;
-	public int level;
-	public int posX,posY;
-<<<<<<< HEAD
-=======
-	String x []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};
->>>>>>> origin/master
+	//각각의 액티비티별로 프레임을 구성한다
+	public JFrame logoframe;	//맨 처음 로고가 나오는 부분
+	public JFrame mainframe;	//메인 메뉴가 있는 프레임
+	public JFrame playmenu;		//실행 화면이 있는 프레임
+	public JFrame scoreview;	//스코어를 볼 수 있는 프레임
+	private int width=600;		//전체 프레임의 폭
+	private int height=800;		//전체 프레임의 높이
+	private int level;			//현재 실행중인 프레임의 번호
+	private int posX,posY;		//화면이 움직일때 사용되는 좌표값
+	private int score[][];		//점수를 저장할 배열
+	String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
-	Render(){
+	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
+	{
 		level=0;
 		mainframe=new JFrame();
-<<<<<<< HEAD
-		posX=16;
-		posY=39;
-	}
-	//inital start screen
-	public void drawlogos()
-	{
-		//mainframe.
-=======
 		logoframe=new JFrame();
 		playmenu=new JFrame();
+		scoreview=new JFrame();
 		posX=500;
 		posY=150;
-		
+		score=new int[3][100];
+		for(int i=0;i<3;i++)
+		{
+			for(int j=0;j<100;j++)
+				score[i][j]=0;
+		}
 	}
 
 	public void draw()
 	{
+		//가장 처음의 logoframe을 출력한다.
 		drawlogos();
 		logoframe.repaint();
->>>>>>> origin/master
 	}
 //inital start screen
 	public void drawlogos()
@@ -107,10 +101,19 @@ public class Render {
 		allover.add(title);
 		logoframe.add(allover);
 	}
+	public void drawscoreview()
+	{
+		scoreview.setName("scoreviewdeclared");
+		scoreview.setUndecorated(true);
+		scoreview.setResizable(false);
+		scoreview.setVisible(true);
+		scoreview.getContentPane().setLayout(null);
+		scoreview.setSize(width, height);
+		scoreview.setLocation(posX,posY);
+		scoreview.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 	public void drawplaymenu()
 	{
-<<<<<<< HEAD
-=======
 		playmenu.setName("playmenudeclared");
 		playmenu.setUndecorated(true);
 		playmenu.setResizable(false);
@@ -120,14 +123,14 @@ public class Render {
 		playmenu.setLocation(posX,posY);
 		playmenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		PaperPanel titlecontainer=new PaperPanel(width,100);
+		PaperPanel titlecontainer=new PaperPanel(width,100,0);
 		titlecontainer.setLocation(0, 0);
 		
 		JPanel paper=new JPanel();
 		paper.setVisible(true);
 		paper.setLayout(null);
 		paper.setSize(width, height);
-		paper.setBackground(Color.decode("#e5e5e5"));
+		paper.setBackground(Color.decode("#212121"));
 		paper.setLocation(0, 0);
 		
 		JPanel notibar=new JPanel();
@@ -144,18 +147,13 @@ public class Render {
 		title.setLocation(0,0);
 		title.setLayout(null);
 		
+		/*
 		JPanel introduction = new JPanel();
 		introduction.setBackground(Color.WHITE);
 		introduction.setSize(width,170);
 		introduction.setLocation(0,100);
-		
-		PaperPanel item1=new PaperPanel(width-30, 170, 3);
-		item1.setLocation(15,115);
-		PaperPanel item2=new PaperPanel(width-30, 170, 3);
-		item2.setLocation(15,285);
-		PaperPanel item3=new PaperPanel(width-30, 170, 3);
-		item3.setLocation(15,455);
-		
+		*/
+				
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
 		exiticon.addMouseListener(new ExitButton());
@@ -170,12 +168,26 @@ public class Render {
 		titlelabel.setLocation(100,32);
 		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
 		
-		select menu1 = new select(0, 500, x[0],Color.decode("#00bcd4"));
+		select menu1 = new select(0, 500, Subject[0],Color.decode("#00bcd4"));
 		menu1.setLocation(0,0);
-		select menu2 = new select(0, 500, x[1],Color.decode("#00bcd4"));
+		
+		PaperPanel item1=new PaperPanel(width, 170, 3);
+		item1.setLocation(0,100);
+		
+		IconPanel menu1icon=new IconPanel(".\\images\\airballon.png",45,45,Color.decode("#AFAFAF"));
+		
+		select menu2 = new select(0, 500, Subject[1],Color.decode("#00bcd4"));
 		menu2.setLocation(0,0);
-		select menu3 = new select(0, 500, x[2],Color.decode("#00bcd4"));
+		
+		PaperPanel item2=new PaperPanel(width, 170, 3);
+		item2.setLocation(0,270);
+		
+		select menu3 = new select(0, 500, Subject[2],Color.decode("#00bcd4"));
 		menu3.setLocation(0,0);
+		
+		PaperPanel item3=new PaperPanel(width, 170, 3);
+		item3.setLocation(0,440);
+		
 		
 		//TODO:: adding
 		title.add(notibar);
@@ -200,18 +212,12 @@ public class Render {
 	public void drawmain()
 	{	
 		mainframe.setName("mainframedeclared");
->>>>>>> origin/master
 		mainframe.setUndecorated(true);
 		mainframe.setResizable(false);
 		mainframe.setVisible(true);
 		mainframe.getContentPane().setLayout(null);
 		mainframe.setSize(width, height);
-<<<<<<< HEAD
-		//mainframe.setSize(width+6, height+29);
-		mainframe.setLocation(0,0);
-=======
 		mainframe.setLocation(posX,posY);
->>>>>>> origin/master
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		PaperPanel titlecontainer=new PaperPanel(width,210);
 		titlecontainer.setLocation(0, 0);
@@ -267,15 +273,10 @@ public class Render {
 		JPanel playbutton=new JPanel();
 		playbutton.setVisible(true);
 		playbutton.setLayout(null);
-<<<<<<< HEAD
-		playbutton.addMouseListener(new Clickcolor());
-		playbutton.setBackground(Color.decode("#5c6bc0"));
-=======
 		playbutton.setName("playbutton");
 		playbutton.addMouseListener(new Clickcolor());
 		playbutton.addMouseListener(new TransScreen());
 		playbutton.setBackground(Color.decode("#D4E157"));
->>>>>>> origin/master
 		playbutton.setSize(105, 105);
 		playbutton.setLocation(0,0);
 		
@@ -292,15 +293,6 @@ public class Render {
 		PaperPanel creditcontainer=new PaperPanel(105,105);
 		creditcontainer.setLocation(233,173);
 		
-<<<<<<< HEAD
-		JPanel creditbutton=new JPanel();
-		creditbutton.setVisible(true);
-		creditbutton.setLayout(null);
-		creditbutton.addMouseListener(new Clickcolor());
-		creditbutton.setBackground(Color.decode("#5c6bc0"));
-		creditbutton.setSize(105, 105);
-		creditbutton.setLocation(0,0);
-=======
 		JPanel scorebutton=new JPanel();
 		scorebutton.setVisible(true);
 		scorebutton.setLayout(null);
@@ -316,7 +308,6 @@ public class Render {
 		scorelabel.setVisible(true);
 		scorelabel.setSize(120,30);
 		scorelabel.setLocation(242,290);
->>>>>>> origin/master
 		
 		IconPanel crediticon=new IconPanel(".\\images\\credit.png",45,45);
 		crediticon.setLocation(30,30);
@@ -327,14 +318,9 @@ public class Render {
 		JPanel aboutbutton=new JPanel();
 		aboutbutton.setVisible(true);
 		aboutbutton.setLayout(null);
-<<<<<<< HEAD
-		aboutbutton.addMouseListener(new Clickcolor());
-		aboutbutton.setBackground(Color.decode("#5c6bc0"));
-=======
 		aboutbutton.setName("aboutbutton");
 		aboutbutton.addMouseListener(new Clickcolor());
 		aboutbutton.setBackground(Color.decode("#D4E157"));
->>>>>>> origin/master
 		aboutbutton.setSize(105, 105);
 		aboutbutton.setLocation(0,0);
 		
@@ -350,11 +336,7 @@ public class Render {
 		
 		JLabel titlename=new JLabel("S PLAY");
 		titlename.setVisible(true);
-<<<<<<< HEAD
-		titlename.setFont(new Font("HY강B",Font.PLAIN,42));
-=======
 		titlename.setFont(new Font("맑은 고딕",Font.BOLD,42));
->>>>>>> origin/master
 		titlename.setForeground(Color.decode("#FFFFFF"));
 		titlename.setBounds(75, 130, 150, 70);
 				
@@ -396,22 +378,14 @@ public class Render {
 		public void mousePressed(MouseEvent e)
 		{
 			JPanel play=(JPanel)e.getSource();
-<<<<<<< HEAD
-			play.setBackground(Color.decode("#3949AB"));
-=======
 			play.setBackground(Color.decode("#AFB42B"));
->>>>>>> origin/master
 		}
 		
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
 			JPanel play=(JPanel)e.getSource();
-<<<<<<< HEAD
-			play.setBackground(Color.decode("#5c6bc0"));
-=======
 			play.setBackground(Color.decode("#D4E157"));
->>>>>>> origin/master
 		}
 	}
 	class ClickcolorCircle extends MouseAdapter{
@@ -420,12 +394,10 @@ public class Render {
 		{
 			if(Math.sqrt(Math.pow(e.getX()-(44),2)+Math.pow(e.getY()-(44), 2))<43)
 			{
-<<<<<<< HEAD
 				Circle btn=(Circle)e.getSource();
-				btn.SetColor(Color.decode("#C62828"));
+				btn.SetColor(Color.decode("#AFB42B"));
+				btn.setBackground(Color.decode("#AFB42B"));
 				btn.repaint();
-=======
->>>>>>> origin/master
 				//TODO:: clear background glitter
 			}
 		}
@@ -434,11 +406,6 @@ public class Render {
 			if(Math.sqrt(Math.pow(e.getX()-(44),2)+Math.pow(e.getY()-(44), 2))<43)
 			{
 				Circle btn=(Circle)e.getSource();
-<<<<<<< HEAD
-				btn.SetColor(Color.decode("#ef5350"));
-				btn.setBackground(new Color(0,0,0,0));
-				mainframe.dispose();
-=======
 				btn.SetColor(Color.decode("#CDDC39"));
 				btn.setBackground(new Color(0,0,0,0));
 				JFrame target=new JFrame();
@@ -455,13 +422,10 @@ public class Render {
 					break;
 				}
 				target.dispose();
->>>>>>> origin/master
 				System.exit(1);
 			}
 		}
 	}
-<<<<<<< HEAD
-=======
 	class ExitButton extends MouseAdapter{
 		public void mouseReleased(MouseEvent e)
 		{
@@ -504,6 +468,12 @@ public class Render {
 				//endtestbed
 				drawmain();
 				mainframe.repaint();
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				logoframe.setVisible(false);
 				level=1;
 				break;
@@ -518,6 +488,14 @@ public class Render {
 						playmenu.setLocation(posX,posY);
 						playmenu.setVisible(true);
 					}
+					
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 					mainframe.setVisible(false);
 					level=2;
 				}
@@ -546,7 +524,6 @@ public class Render {
 			}
 		}
 	}
->>>>>>> origin/master
 	class Moveframe extends MouseAdapter{
 		@Override
 		public void mousePressed(MouseEvent e)
@@ -558,9 +535,6 @@ public class Render {
 	class Movingframe extends MouseMotionAdapter{
 		public void mouseDragged(MouseEvent evt)
 		{
-<<<<<<< HEAD
-			mainframe.setLocation(mainframe.getLocation().x+evt.getX()-Px,mainframe.getLocation().y+evt.getY()-Py);
-=======
 			JFrame target=new JFrame();
 			switch(level)
 			{
@@ -577,7 +551,6 @@ public class Render {
 			target.setLocation(target.getLocation().x+evt.getX()-Px,target.getLocation().y+evt.getY()-Py);
 			posX=target.getLocation().x;
 			posY=target.getLocation().y;
->>>>>>> origin/master
 		}
 	}
 }

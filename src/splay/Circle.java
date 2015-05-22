@@ -27,8 +27,6 @@ public class Circle extends JPanel{
 		setForeground(color);
 		setBackground(new Color(0,0,0,0));
 		//super.paintComponent(ga);
-<<<<<<< HEAD
-=======
 	}
 }
 class CirclePanel extends JPanel
@@ -42,21 +40,6 @@ class CirclePanel extends JPanel
 		shadow.setVisible(true);
 		shadow.setSize(width-3,height);
 		shadow.setLocation(0,3);
-		super.add(shadow,-1,0);
->>>>>>> origin/master
-	}
-}
-class CirclePanel extends JPanel
-{
-	public CirclePanel(int width,int height){
-		setVisible(true);
-		setSize(width,height+2);
-		setLayout(null);
-		setBackground(new Color(0,0,0,0));
-		Circle shadow=new Circle(new Color(0,0,0,77));
-		shadow.setVisible(true);
-		shadow.setSize(width,height);
-		shadow.setLocation(0,2);
 		super.add(shadow,-1,0);
 	}
 }

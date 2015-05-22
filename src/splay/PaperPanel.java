@@ -42,8 +42,6 @@ public class PaperPanel extends JPanel{
 		shadow.setLocation(0,height);
 		add(shadow);
 	}
-<<<<<<< HEAD
-=======
 	public PaperPanel(int width,int height,int depth){
 		setVisible(true);
 		setSize(width, height+depth);
@@ -55,7 +53,6 @@ public class PaperPanel extends JPanel{
 		shadow.setLocation(0,height);
 		add(shadow);
 	}
->>>>>>> origin/master
 }
 
 class IconPanel extends JPanel{
@@ -90,25 +87,16 @@ class IconPanel extends JPanel{
 	public void paint(Graphics G)
 	{
 		super.paintComponents(G);
-<<<<<<< HEAD
-		setBackground(new Color(0,0,0,0));
-=======
 		
->>>>>>> origin/master
 		G.drawImage(image,0,0,this.getWidth(),this.getHeight(), this);
 	}
 	@Override
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
-<<<<<<< HEAD
-		
-	}
-=======
 		setBackground(new Color(0,0,0,0));
 		
 	}
 	
->>>>>>> origin/master
 	
 }
