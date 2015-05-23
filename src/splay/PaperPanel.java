@@ -88,7 +88,7 @@ class IconPanel extends JPanel{
 	{
 		super.paintComponents(G);
 		
-		G.drawImage(image,0,0,this.getWidth(),this.getHeight(), this);
+		G.drawImage(image,0,0,this.width+2,this.height+2, this);
 	}
 	@Override
 	public void paintComponent(Graphics G)

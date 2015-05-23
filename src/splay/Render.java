@@ -22,6 +22,9 @@ public class Render {
 	private int level;			//현재 실행중인 프레임의 번호
 	private int posX,posY;		//화면이 움직일때 사용되는 좌표값
 	private int score[][];		//점수를 저장할 배열
+	private int accuracy[];	//과목당 정확도
+	private int choosedSub;
+	private int achievement[];	//진행상황
 	String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
 	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
@@ -33,12 +36,20 @@ public class Render {
 		scoreview=new JFrame();
 		posX=500;
 		posY=150;
+		//점수 배열 할당 및 초기화
 		score=new int[3][100];
 		for(int i=0;i<3;i++)
 		{
 			for(int j=0;j<100;j++)
 				score[i][j]=0;
 		}
+		achievement=new int[3];
+		for(int i=0;i<3;i++)
+			achievement[i]=0;
+		accuracy=new int[3];
+		for(int i=0;i<3;i++)
+			accuracy[i]=0;
+		
 	}
 
 	public void draw()
@@ -90,6 +101,12 @@ public class Render {
 		dev.setForeground(Color.decode("#FFFFFF"));
 		dev.setBounds(75, 215, 300, 70);
 		
+		JLabel java=new JLabel("JAVA 프로그래밍");
+		java.setVisible(true);
+		java.setFont(new Font("맑은 고딕",Font.BOLD,18));
+		java.setForeground(Color.decode("#FFFFFF"));
+		java.setBounds(75, 340, 300, 70);
+		
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",30,30);
 		exiticon.setLocation(555,15);
 		exiticon.addMouseListener(new ExitButton());
@@ -99,6 +116,7 @@ public class Render {
 		allover.add(major);
 		allover.add(corp);
 		allover.add(title);
+		allover.add(java);
 		logoframe.add(allover);
 	}
 	public void drawscoreview()
@@ -111,6 +129,89 @@ public class Render {
 		scoreview.setSize(width, height);
 		scoreview.setLocation(posX,posY);
 		scoreview.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel paper=new JPanel();
+		paper.setVisible(true);
+		paper.setLayout(null);
+		paper.setSize(width, height);
+		paper.setBackground(Color.decode("#FAFAFA"));
+		paper.setLocation(0, 0);
+				
+		JPanel notibar=new JPanel();
+		notibar.addMouseListener(new Moveframe());
+		notibar.addMouseMotionListener(new Movingframe());
+		notibar.setVisible(true);
+		notibar.setBackground(new Color(0,0,0,77));
+		notibar.setSize(width, 20);
+		notibar.setLocation(0,0);
+		
+		JPanel title = new JPanel();
+		title.setBackground(Color.decode("#00BCD4"));
+		title.setSize(width,100);
+		title.setLocation(0,0);
+		title.setLayout(null);
+		
+		JLabel titlelabel = new JLabel("SCORE");
+		titlelabel.setSize(200,50);
+		titlelabel.setForeground(Color.decode("#FFFFFF"));
+		titlelabel.setLocation(100,32);
+		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
+		
+		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
+		exiticon.setLocation(520,37);
+		exiticon.addMouseListener(new ExitButton());
+		
+		IconPanel backicon=new IconPanel(".\\images\\back.png",45,45,Color.decode("#00BCD4"));
+		backicon.setLocation(20,37);
+		backicon.addMouseListener(new BackMenu());
+		
+		PaperPanel item1=new PaperPanel(width, 170, 3);
+		item1.setLocation(0,100);
+		PaperPanel item2=new PaperPanel(width, 170, 3);
+		item2.setLocation(0,270);
+		PaperPanel item3=new PaperPanel(width, 170, 3);
+		item3.setLocation(0,440);
+		
+		select menu1 = new select(0, 500, Subject[0],Color.decode("#00bcd4"));
+		menu1.setLocation(0,0);
+		select menu2 = new select(0, 500, Subject[1],Color.decode("#00bcd4"));
+		menu2.setLocation(0,0);
+		select menu3 = new select(0, 500, Subject[2],Color.decode("#00bcd4"));
+		menu3.setLocation(0,0);
+				
+		IconPanel menu1icon=new IconPanel(".\\images\\item1.png",45,45,Color.decode("#AFAFAF"));
+		menu1icon.setLocation(30,60);
+		IconPanel menu2icon=new IconPanel(".\\images\\item2.png",45,45,Color.decode("#AFAFAF"));
+		menu2icon.setLocation(30,60);
+		IconPanel menu3icon=new IconPanel(".\\images\\item3.png",45,45,Color.decode("#AFAFAF"));
+		menu3icon.setLocation(30,60);
+		
+		piechart sub1=new piechart(accuracy[0]);
+		sub1.setVisible(true);
+		sub1.setBounds(500,60,80,80);
+		
+		
+		//TODO:: scoreadding
+		title.add(exiticon);
+		title.add(backicon);
+		title.add(titlelabel);
+		title.add(notibar);
+		
+		menu1.add(sub1);
+		menu1.add(menu1icon);
+		menu2.add(menu2icon);
+		menu3.add(menu3icon);
+		
+		item1.add(menu1);
+		item2.add(menu2);
+		item3.add(menu3);
+		
+		paper.add(item1);
+		paper.add(item2);
+		paper.add(item3);
+		
+		paper.add(title);
+		scoreview.add(paper);
 	}
 	public void drawplaymenu()
 	{
@@ -130,7 +231,7 @@ public class Render {
 		paper.setVisible(true);
 		paper.setLayout(null);
 		paper.setSize(width, height);
-		paper.setBackground(Color.decode("#212121"));
+		paper.setBackground(Color.decode("#FAFAFA"));
 		paper.setLocation(0, 0);
 		
 		JPanel notibar=new JPanel();
@@ -153,6 +254,7 @@ public class Render {
 		introduction.setSize(width,170);
 		introduction.setLocation(0,100);
 		*/
+		
 				
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
@@ -167,29 +269,61 @@ public class Render {
 		titlelabel.setForeground(Color.decode("#FFFFFF"));
 		titlelabel.setLocation(100,32);
 		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
-		
-		select menu1 = new select(0, 500, Subject[0],Color.decode("#00bcd4"));
-		menu1.setLocation(0,0);
-		
+		//////////////
 		PaperPanel item1=new PaperPanel(width, 170, 3);
 		item1.setLocation(0,100);
-		
-		IconPanel menu1icon=new IconPanel(".\\images\\airballon.png",45,45,Color.decode("#AFAFAF"));
-		
-		select menu2 = new select(0, 500, Subject[1],Color.decode("#00bcd4"));
-		menu2.setLocation(0,0);
-		
 		PaperPanel item2=new PaperPanel(width, 170, 3);
 		item2.setLocation(0,270);
-		
-		select menu3 = new select(0, 500, Subject[2],Color.decode("#00bcd4"));
-		menu3.setLocation(0,0);
-		
 		PaperPanel item3=new PaperPanel(width, 170, 3);
 		item3.setLocation(0,440);
 		
+		select menu1 = new select(0, 500, Subject[0],Color.decode("#00bcd4"));
+		menu1.setLocation(0,0);
+		select menu2 = new select(0, 500, Subject[1],Color.decode("#00bcd4"));
+		menu2.setLocation(0,0);
+		select menu3 = new select(0, 500, Subject[2],Color.decode("#00bcd4"));
+		menu3.setLocation(0,0);
+				
+		IconPanel menu1icon=new IconPanel(".\\images\\item1.png",45,45,Color.decode("#AFAFAF"));
+		menu1icon.setLocation(30,60);
+		IconPanel menu2icon=new IconPanel(".\\images\\item2.png",45,45,Color.decode("#AFAFAF"));
+		menu2icon.setLocation(30,60);
+		IconPanel menu3icon=new IconPanel(".\\images\\item3.png",45,45,Color.decode("#AFAFAF"));
+		menu3icon.setLocation(30,60);
 		
-		//TODO:: adding
+		JLabel ach1 =new JLabel("achievement");
+		ach1.setForeground(Color.decode("#616161"));
+		ach1.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		ach1.setSize(100,15);
+		ach1.setLocation(470, 50);
+		JLabel ach2 =new JLabel("achievement");
+		ach2.setForeground(Color.decode("#616161"));
+		ach2.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		ach2.setSize(100,15);
+		ach2.setLocation(470, 50);
+		JLabel ach3 =new JLabel("achievement");
+		ach3.setForeground(Color.decode("#616161"));
+		ach3.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		ach3.setSize(100,15);
+		ach3.setLocation(470, 50);
+		
+		Integer menu1achie=new Integer(achievement[0]);
+		JLabel menu1ach=new JLabel(menu1achie.toString()+"%");		
+		menu1ach.setFont(new Font("맑은 고딕",Font.BOLD,28));
+		menu1ach.setForeground(Color.decode("#CDDC39"));
+		menu1ach.setBounds(500,60,50,50);
+		Integer menu2achie=new Integer(achievement[0]);
+		JLabel menu2ach=new JLabel(menu2achie.toString()+"%");		
+		menu2ach.setFont(new Font("맑은 고딕",Font.BOLD,28));
+		menu2ach.setForeground(Color.decode("#CDDC39"));
+		menu2ach.setBounds(500,60,50,50);
+		Integer menu3achie=new Integer(achievement[0]);
+		JLabel menu3ach=new JLabel(menu3achie.toString()+"%");		
+		menu3ach.setFont(new Font("맑은 고딕",Font.BOLD,28));
+		menu3ach.setForeground(Color.decode("#CDDC39"));
+		menu3ach.setBounds(500,60,50,50);
+		
+		//TODO:: playmenuadding
 		title.add(notibar);
 		title.add(titlelabel);
 		title.add(backicon);
@@ -197,6 +331,18 @@ public class Render {
 		titlecontainer.add(title);
 		
 		paper.add(titlecontainer);
+		
+		menu1.add(ach1);
+		menu2.add(ach2);
+		menu3.add(ach3);
+		
+		menu1.add(menu1ach);
+		menu2.add(menu2ach);
+		menu3.add(menu3ach);
+		
+		menu1.add(menu1icon);
+		menu2.add(menu2icon);
+		menu3.add(menu3icon);
 		
 		item1.add(menu1);
 		item2.add(menu2);
@@ -245,13 +391,13 @@ public class Render {
 		Circle exit=new Circle(Color.decode("#CDDC39"));
 		exit.setVisible(true);
 		exit.setLayout(null);
-		exit.addMouseListener(new ClickcolorCircle());
+		exit.addMouseListener(new ClickcolorCircleExit());
 		exit.setLocation(0,0);
 		exit.setSize(87,87);
 		
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45);
 		exiticon.setLocation(22,22);
-			
+		
 		JPanel notibar=new JPanel();
 		notibar.addMouseListener(new Moveframe());
 		notibar.addMouseMotionListener(new Movingframe());
@@ -298,6 +444,7 @@ public class Render {
 		scorebutton.setLayout(null);
 		scorebutton.setName("scorebutton");
 		scorebutton.addMouseListener(new Clickcolor());
+		scorebutton.addMouseListener(new TransScreen());
 		scorebutton.setBackground(Color.decode("#D4E157"));
 		scorebutton.setSize(105, 105);
 		scorebutton.setLocation(0,0);
@@ -388,7 +535,7 @@ public class Render {
 			play.setBackground(Color.decode("#D4E157"));
 		}
 	}
-	class ClickcolorCircle extends MouseAdapter{
+	class ClickcolorCircleExit extends MouseAdapter{
 		@Override
 		public void mousePressed(MouseEvent e)
 		{
@@ -408,6 +555,9 @@ public class Render {
 				Circle btn=(Circle)e.getSource();
 				btn.SetColor(Color.decode("#CDDC39"));
 				btn.setBackground(new Color(0,0,0,0));
+				btn.repaint();
+				//TODO:add another asking windows
+								
 				JFrame target=new JFrame();
 				switch(level)
 				{
@@ -452,20 +602,6 @@ public class Render {
 			switch(level)
 			{
 			case 0:
-				//testbed
-				/*JPanel allover=(JPanel)e.getSource();
-				int temp=allover.getLocation().y;
-				for(int i=0;i<590;i++)
-				{
-					allover.setLocation(allover.getLocation().x,temp-i);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					allover.repaint();
-				}*/
-				//endtestbed
 				drawmain();
 				mainframe.repaint();
 				try {
@@ -488,23 +624,27 @@ public class Render {
 						playmenu.setLocation(posX,posY);
 						playmenu.setVisible(true);
 					}
-					
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
 					mainframe.setVisible(false);
 					level=2;
 				}
 				else if(target.getName()=="scorebutton")
 				{
+					if(scoreview.getName()!="scoreviewdeclared")
+						drawscoreview();
+					else
+					{
+						scoreview.setLocation(posX,posY);
+						scoreview.setVisible(true);
+					}
+					System.out.println("level3");
+					mainframe.setVisible(false);
 					level=3;
 				}
-				mainframe.setVisible(false);
+				
 				break;
+			default:
+				System.out.println("default");
+					
 			}
 		}
 	}
@@ -517,6 +657,12 @@ public class Render {
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);				
 					playmenu.setVisible(false);
+					level=1;
+					break;
+				case 3:
+					mainframe.setLocation(posX,posY);
+					mainframe.setVisible(true);
+					scoreview.setVisible(false);
 					level=1;
 					break;
 				default:
@@ -547,6 +693,8 @@ public class Render {
 			case 2:
 				target=playmenu;
 				break;
+			case 3:
+				target=scoreview;
 			}
 			target.setLocation(target.getLocation().x+evt.getX()-Px,target.getLocation().y+evt.getY()-Py);
 			posX=target.getLocation().x;
