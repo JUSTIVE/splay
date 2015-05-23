@@ -77,7 +77,7 @@ class IconPanel extends JPanel{
 		this.height=height;
 		this.bColor=bColor;
 		setSize(height,width);
-		setBackground(bColor);
+		setBackground(this.bColor);
 		try{
 			image = ImageIO.read(new File(location));
 		}
@@ -94,7 +94,7 @@ class IconPanel extends JPanel{
 	public void paintComponent(Graphics G)
 	{
 		super.paintComponent(G);
-		setBackground(new Color(0,0,0,0));
+		//setBackground(new Color(0,0,0,0));
 		
 	}
 	

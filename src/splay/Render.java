@@ -17,6 +17,7 @@ public class Render {
 	public JFrame mainframe;	//메인 메뉴가 있는 프레임
 	public JFrame playmenu;		//실행 화면이 있는 프레임
 	public JFrame scoreview;	//스코어를 볼 수 있는 프레임
+	public JFrame aboutview;
 	private int width=600;		//전체 프레임의 폭
 	private int height=800;		//전체 프레임의 높이
 	private int level;			//현재 실행중인 프레임의 번호
@@ -34,6 +35,7 @@ public class Render {
 		logoframe=new JFrame();
 		playmenu=new JFrame();
 		scoreview=new JFrame();
+		aboutview=new JFrame();
 		posX=500;
 		posY=150;
 		//점수 배열 할당 및 초기화
@@ -212,6 +214,156 @@ public class Render {
 		
 		paper.add(title);
 		scoreview.add(paper);
+	}
+	public void drawaboutview()
+	{
+		aboutview.setName("aboutviewdeclared");
+		aboutview.setUndecorated(true);
+		aboutview.setResizable(false);
+		aboutview.setVisible(true);
+		aboutview.getContentPane().setLayout(null);
+		aboutview.setSize(width, height);
+		aboutview.setLocation(posX,posY);
+		aboutview.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		PaperPanel titlecontainer=new PaperPanel(width,210,6);
+		titlecontainer.setLocation(0, 0);
+		
+		JPanel paper=new JPanel();
+		paper.setVisible(true);
+		paper.setLayout(null);
+		paper.setSize(width, height);
+		paper.setBackground(Color.decode("#FAFAFA"));
+		paper.setLocation(0, 0);
+		
+		JPanel notibar=new JPanel();
+		notibar.addMouseListener(new Moveframe());
+		notibar.addMouseMotionListener(new Movingframe());
+		notibar.setVisible(true);
+		notibar.setBackground(new Color(0,0,0,77));
+		notibar.setSize(width, 20);
+		notibar.setLocation(0,0);
+		
+		JPanel title=new JPanel();
+		title.setVisible(true);
+		title.setLayout(null);
+		title.setBackground(Color.decode("#00BCD4"));
+		title.setSize(width, 210);
+		title.setLocation(0,0);
+		
+		JLabel titlename=new JLabel("Credit + About");
+		titlename.setVisible(true);
+		titlename.setFont(new Font("맑은 고딕",Font.BOLD,42));
+		titlename.setForeground(Color.decode("#FFFFFF"));
+		titlename.setBounds(75, 130, 400, 70);
+		
+		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
+		exiticon.setLocation(520,37);
+		exiticon.addMouseListener(new ExitButton());
+		
+		IconPanel backicon=new IconPanel(".\\images\\back.png",45,45,Color.decode("#00BCD4"));
+		backicon.setLocation(20,37);
+		backicon.addMouseListener(new BackMenu());
+		//title over///////////////////////////////////////////////////////
+		
+		PaperPanel about = new PaperPanel(600,250);
+		about.setBackground(Color.decode("#fafafa"));
+		about.setLocation(0,200);
+		about.setLayout(null);
+		
+		JPanel aboutpanel = new JPanel();
+		aboutpanel.setBackground(Color.decode("#00BCD2"));
+		aboutpanel.setSize(70,70);
+		aboutpanel.setLocation(20,20);
+		aboutpanel.setLayout(null);
+				
+		IconPanel abouticon=new IconPanel(".\\images\\about.png",45,45);
+		abouticon.setLocation(12,12);
+		
+		JLabel aboutlabel = new JLabel("About");
+		aboutlabel.setSize(500,50);
+		aboutlabel.setFont(new Font("맑은 고딕",Font.PLAIN,32));
+		aboutlabel.setLocation(100,30);
+		
+		
+		String x = "이 프로그램은 사용자의 학습능력을 도와주는";
+		String x2 = "학습 프로그램 입니다.";
+		JLabel aboutinsert = new JLabel(x);
+		aboutinsert.setSize(800,100);
+		aboutinsert.setFont(new Font("맑은 고딕",Font.PLAIN,25));
+		aboutinsert.setLocation(30,80);
+		
+		JLabel aboutinsert2 = new JLabel(x2);
+		aboutinsert2.setSize(800,100);
+		aboutinsert2.setFont(new Font("맑은 고딕",Font.PLAIN,25));
+		aboutinsert2.setLocation(30,120);
+		
+		PaperPanel credit = new PaperPanel(600,250);
+		credit.setBackground(Color.decode("#fafafa"));
+		credit.setLocation(0,450);
+		credit.setLayout(null);
+		
+		IconPanel crediticon = new IconPanel(".\\images\\credit.png",45,45);
+		crediticon.setLocation(12,12);
+		
+				
+		String credits[] = {"Credit", "20144575 김민상","20144592 이기백","20144564 김민기"};
+				
+		JPanel creditpanel = new JPanel();
+		creditpanel.setBackground(Color.decode("#00BCD2"));
+		creditpanel.setSize(70,70);
+		creditpanel.setLocation(20,20);
+		creditpanel.setLayout(null);
+		
+		JLabel creaditlabel = new JLabel(credits[0]);
+		creaditlabel.setSize(500,50);
+		creaditlabel.setFont(new Font("맑은 고딕",Font.PLAIN,32));
+		creaditlabel.setLocation(100,30);
+		credit.add(creaditlabel);
+		
+		JLabel creaditinsert = new JLabel(credits[1]);
+		creaditinsert.setSize(800,100);
+		creaditinsert.setFont(new Font("맑은 고딕",Font.PLAIN,25));
+		creaditinsert.setLocation(30,80);
+		
+		JLabel creaditinsert2 = new JLabel(credits[2]);
+		creaditinsert2.setSize(800,100);
+		creaditinsert2.setFont(new Font("맑은 고딕",Font.PLAIN,25));
+		creaditinsert2.setLocation(30,120);
+		
+		JLabel creaditinsert3 = new JLabel(credits[3]);
+		creaditinsert3.setSize(800,100);
+		creaditinsert3.setFont(new Font("맑은 고딕",Font.PLAIN,25));
+		creaditinsert3.setLocation(30,160);
+		
+		//TODO:: about adding
+		
+		aboutpanel.add(abouticon);
+		about.add(aboutlabel);
+		about.add(aboutpanel);
+		about.add(aboutinsert2);
+		about.add(aboutinsert);
+		
+		creditpanel.add(crediticon);
+		credit.add(creditpanel);
+		credit.add(creaditinsert);
+		credit.add(creaditinsert2);
+		credit.add(creaditinsert3);
+		
+		title.add(titlename);
+		title.add(notibar);
+		title.add(exiticon);
+		title.add(backicon);
+		titlecontainer.add(title);
+		
+		
+		paper.add(about);
+		paper.add(credit);
+		paper.add(titlecontainer);
+		
+		aboutview.add(paper);
+		
+		
 	}
 	public void drawplaymenu()
 	{
@@ -467,6 +619,7 @@ public class Render {
 		aboutbutton.setLayout(null);
 		aboutbutton.setName("aboutbutton");
 		aboutbutton.addMouseListener(new Clickcolor());
+		aboutbutton.addMouseListener(new TransScreen());
 		aboutbutton.setBackground(Color.decode("#D4E157"));
 		aboutbutton.setSize(105, 105);
 		aboutbutton.setLocation(0,0);
@@ -591,6 +744,11 @@ public class Render {
 			case 2:
 				target=playmenu;
 				break;
+			case 3:
+				target=scoreview;
+				break;
+			case 4:
+				target=aboutview;
 			}
 			target.dispose();
 			System.exit(1);
@@ -636,11 +794,21 @@ public class Render {
 						scoreview.setLocation(posX,posY);
 						scoreview.setVisible(true);
 					}
-					System.out.println("level3");
 					mainframe.setVisible(false);
 					level=3;
 				}
-				
+				else if(target.getName()=="aboutbutton")
+				{
+					if(aboutview.getName()!="aboutviewdeclared")
+						drawaboutview();
+					else
+					{
+						aboutview.setLocation(posX,posY);
+						aboutview.setVisible(true);
+					}
+					mainframe.setVisible(false);
+					level=4;
+				}
 				break;
 			default:
 				System.out.println("default");
@@ -663,6 +831,12 @@ public class Render {
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);
 					scoreview.setVisible(false);
+					level=1;
+					break;
+				case 4:
+					mainframe.setLocation(posX,posY);
+					mainframe.setVisible(true);
+					aboutview.setVisible(false);
 					level=1;
 					break;
 				default:
@@ -695,6 +869,10 @@ public class Render {
 				break;
 			case 3:
 				target=scoreview;
+				break;
+			case 4:
+				target=aboutview;
+				break;
 			}
 			target.setLocation(target.getLocation().x+evt.getX()-Px,target.getLocation().y+evt.getY()-Py);
 			posX=target.getLocation().x;
