@@ -1,7 +1,9 @@
 package splay;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Label;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,6 +13,8 @@ import javax.swing.RepaintManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.HashMap;
+import java.util.Map;
 public class Render {
 	//각각의 액티비티별로 프레임을 구성한다
 	public JFrame logoframe;	//맨 처음 로고가 나오는 부분
@@ -26,13 +30,9 @@ public class Render {
 	private int score[][];		//점수를 저장할 배열
 	private int accuracy[];	//과목당 정확도
 	private int achievement[];	//진행상황
-	private int chapters[][];   //챕터의 수를 가진 배열
 	private int choosedSub;	//현재 선책한 과목의 번호 
 	private int choosedChp; //현재 선택한 과목의 챕터 번호
 	private int choosedNum; //현재 선택한 과목의 챕터의 문제 번호
-	private String arch[] = {"컴퓨터시스템 개요","CPU의 구조와 기능","컴퓨터 산술과 논리 연산","제어 유니트","기억장치","보조저장장치","시스템 버스,I/O 및 인터럽트","고성능 컴퓨터시스템 구조"};
-	private String Clang[] = {"프로그래밍의 개념","프로그래밍 작성 과정","C프로그래밍 구성 요소","변수와 자료형","수식과 연산자","조건문","반복문","함수","함수와 변수","배열","포인터","문자열","구조체","포인터 활용","전처리 및 비트필드","스트림과 파일 입출력","동적 메모리와 연결리스트"};
-	private String struct[] = {"자료구조와 알고리즘","순환","배열,구조체,포인터","리스트","스택","큐","트리","우선순위 큐","정렬","그래프","해싱","탐색"};
 	private String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
 	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
@@ -59,8 +59,7 @@ public class Render {
 		accuracy=new int[3];
 		for(int i=0;i<3;i++)
 			accuracy[i]=0;
-		chapters=new int[3][50];
-		
+		choosedSub=1;
 		
 	}
 
@@ -499,7 +498,7 @@ public class Render {
 		playmenu.add(paper);
 		
 	}
-	public void drawchapterview(int chapternunber)
+	public void drawchapterview()
 	{
 		chapterview.setName("chapterviewdeclared");
 		chapterview.setUndecorated(true);
@@ -530,12 +529,34 @@ public class Render {
 		title.setSize(width,100);
 		title.setLocation(0,0);
 		title.setLayout(null);
+		/*
 		
-		JLabel titlelabel = new JLabel("SCORE");
-		titlelabel.setSize(200,50);
+		for(int i=0;i<3;i++)
+		{
+			Integer temp=i;
+			JLabel titlelabel = new JLabel(Subject[i]);
+			titlelabel.setSize(500,50);
+			titlelabel.setForeground(Color.decode("#FFFFFF"));
+			titlelabel.setLocation(100,32);
+			titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
+			titlelabel.setName(temp.toString());
+			if(i==choosedSub)
+				chapterview.add(titlelabel);
+		}res
+		*/
+		//????
+		System.out.println(Subject[choosedSub]);
+		JLabel titlelabel = new JLabel(Subject[choosedSub]);
+		titlelabel.setName("titlelabel");
+		titlelabel.setSize(500,50);
 		titlelabel.setForeground(Color.decode("#FFFFFF"));
 		titlelabel.setLocation(100,32);
 		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
+		String realtitle=Subject[choosedSub];
+		titlelabel.setText("");
+		System.out.println(realtitle);
+		//titlelabel.setText(Subject[choosedSub]);
+		titlelabel.setText(realtitle);
 		
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
@@ -544,9 +565,9 @@ public class Render {
 		IconPanel backicon=new IconPanel(".\\images\\back.png",45,45,Color.decode("#00BCD4"));
 		backicon.setLocation(20,37);
 		backicon.addMouseListener(new BackMenu());
-		
+				
 		title.add(notibar);
-		title.add(titlelabel);
+		chapterview.add(titlelabel);
 		title.add(exiticon);
 		title.add(backicon);
 		paper.add(title);
@@ -785,6 +806,7 @@ public class Render {
 					target=playmenu;
 					break;
 				}
+				//target.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				target.dispose();
 				System.exit(1);
 			}
@@ -812,25 +834,25 @@ public class Render {
 				case 2:
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);				
-					playmenu.setVisible(false);
+					playmenu.dispose();
 					level=1;
 					break;
 				case 3:
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);
-					scoreview.setVisible(false);
+					scoreview.dispose();
 					level=1;
 					break;
 				case 4:
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);
-					aboutview.setVisible(false);
+					aboutview.dispose();
 					level=1;
 					break;
 				case 5:
 					playmenu.setLocation(posX,posY);
 					playmenu.setVisible(true);
-					chapterview.setVisible(false);
+					chapterview.dispose();
 					level=2;
 				default:
 					break;
@@ -873,13 +895,13 @@ public class Render {
 			switch (target.getName())
 			{
 			case "SUB1":
-				choosedChp=0;
+				choosedSub=0;
 				break;
 			case "SUB2":
-				choosedChp=1;
+				choosedSub=1;
 				break;
 			case "SUB3":
-				choosedChp=2;
+				choosedSub=2;
 				break;
 			default:
 				break;
@@ -887,12 +909,17 @@ public class Render {
 			chapterview.setLocation(posX,posY);
 			playmenu.setVisible(false);
 			level=5;
-			if(chapterview.getName()!="chapterviewdeclared")
-				drawchapterview(choosedChp);
-			else
-			{
-				chapterview.setVisible(true);
+			System.out.println(choosedSub);
+
+			
+			if(chapterview.getName()!="chapterviewdeclared"){
+				drawchapterview();
+				chapterview.revalidate();
+				chapterview.setName("");
 			}
+			
+				
+			
 		}
 	}
 	class TransScreen extends MouseAdapter{
