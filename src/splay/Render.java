@@ -2,6 +2,8 @@ package splay;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +33,8 @@ public class Render {
 	private int choosedChp; //현재 선택한 과목의 챕터 번호
 	private int choosedNum; //현재 선택한 과목의 챕터의 문제 번호
 	private JLabel chaptertitle;
+	private String arch_ans[]= {"<html>2</html>","<html>3</html>","<html>4</html>","<html>3</html>","<html>3</html>","<html>2</html>","<html>3</html>","<html>2</html>","<html>2</html>","<html>3</html>","<html>4</html>","<html>2</html>","<html>3</html>","<html>3</html>","<html>1</html>","<html>4</html>","<html>2</html>","<html>3</html>","<html>2</html>","<html>3</html>","<html>3</html>","<html>3</html>","<html>2</html>","<html>3</html>"};
+	private String archchose[][]= {{"①CPU","②캐시","③입출력 장치","④기억장치"}, {"①8비트","②32비트","③24비트","④64비트"}, {"①12","②1024","③2048","④4096"},{"①주소 버스","②데이터 버스","③I/O 버스","④제어 버스"},{"①제어 비트","②부호 비트","③패리티 비트","④올림수 비트"} ,{"①클러스터 컴퓨터","②임베디드 컴퓨터","③MPP","④파이프라인 슈퍼컴퓨터"} , {"①스택","②제어 유니트","③레지스터 세트","④ALU"},{"①인출 사이클","②간접 사이클","③제어 사이클","④실행 사이클"},{"①0.5ns","②1.5ns","③2ns","④6ns"},{"①10","②13","③14","④40"},{"①1개","②2개","③4개","④8개"},{"①1KByte","②2KByte","③4KByte","④8KByte"},{"①한 번","②두 번","③세 번","④액세스하지 않는다."},{"①-12","②48","③-24","④232"},{"①AND 연산","②OR 연산","③XOR 연산","④NOT연산"},{"①AND 연산","②OR 연산","③XOR 연산","④NOT연산"},{"①00101011","②01010110","③11010110","④11101011"},{"①00101101","②10101101","③10110111","④10110110"},{"①지수 조정","②정규화","③지수 덧셈"," ④가수 덧셈"},{"①CBR","②CAR","③IR","④PC","①RAM","②CAM","③ROM","④DISK"},{"①호출(CALL)","②복귀(RET)","③점프(JUMP)", "④조건부 호출(conditional CALL)"},{"①SBR의 내용","②사상(mapping)의 결과값","③연산 필드 비트들","④주소 필드(ADF)의 값"},{"①4개","②8개","③16개","④32개"},{"①8개","②16개","③32개","④64개"}};
 	private String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
 	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
@@ -499,7 +503,7 @@ public class Render {
 	}
 	public void drawchapterview()
 	{
-		chapterview.setName("chapterviewdeclared");
+		//chapterview.setName("chapterviewdeclared");
 		chapterview.setUndecorated(true);
 		chapterview.setResizable(false);
 		chapterview.setVisible(true);
@@ -524,37 +528,30 @@ public class Render {
 		notibar.setLocation(0,0);
 		
 		JPanel title = new JPanel();
+		
 		title.setBackground(Color.decode("#00BCD4"));
 		title.setSize(width,100);
 		title.setLocation(0,0);
 		title.setLayout(null);
-		
-		JLabel titlelabel = new JLabel();
-		if(titlelabel.getName()=="titlelabel");
-			titlelabel.setForeground(Color.RED);
-		titlelabel.setName("titlelabel");
+		////////////////////////////////
+		////////////////////////////////
+		JLabel titlelabel;
+		titlelabel = new JLabel(){
+			@Override
+			 public void paint(Graphics g)
+            {
+				setText(Subject[choosedSub]);
+				g.drawString(Subject[choosedSub], 0,40);
+            }
+		};
 		titlelabel.setSize(500,50);
 		titlelabel.setForeground(Color.decode("#FFFFFF"));
 		titlelabel.setLocation(100,32);
 		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
-		System.out.println(Subject[choosedSub]);
 		titlelabel.setVisible(true);
-		System.out.println(titlelabel.getText());
-		titlelabel.setText((Subject[choosedSub]).toString().toString());
-		
-		/*
-		chaptertitle.setText(Subject[choosedSub]);
-		chaptertitle.setSize(500,50);
-		chaptertitle.setForeground(Color.decode("#FFFFFF"));
-		chaptertitle.setLocation(100,32);
-		chaptertitle.setFont(new Font("맑은 고딕",Font.BOLD,32));
-		chaptertitle.setVisible(true);
-		System.out.println(choosedSub);
-		System.out.println(chaptertitle.getText());
-		chaptertitle.repaint();
-		*/
 		//TODO: problem occurred
-		
+		///////////////////////////////////
+		///////////////////////////////////
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
 		exiticon.addMouseListener(new ExitButton());
@@ -564,12 +561,12 @@ public class Render {
 		backicon.addMouseListener(new BackMenu());
 				
 		title.add(notibar);
-		title.add(titlelabel);
+		
+		chapterview.add(titlelabel);
 		title.add(exiticon);
 		title.add(backicon);
 		paper.add(title);
-		//chapterview.add(titlelabel);
-		//chapterview.add(chaptertitle);
+		
 		chapterview.add(paper);
 		
 	}
@@ -805,7 +802,6 @@ public class Render {
 					target=playmenu;
 					break;
 				}
-				//target.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				target.dispose();
 				System.exit(1);
 			}
@@ -852,6 +848,8 @@ public class Render {
 					playmenu.setLocation(posX,posY);
 					playmenu.setVisible(true);
 					chapterview.setVisible(false);
+					chapterview.dispose();
+					
 					level=2;
 				default:
 					break;
@@ -911,13 +909,15 @@ public class Render {
 			if(chapterview.getName()!="chapterviewdeclared")
 			{				
 				drawchapterview();
+				
 			}
 			else
 			{
 				//TODO:: update jlabel
-				chapterview.revalidate();
+				chapterview.validate();
+				chapterview.getContentPane().repaint();
 				chapterview.setVisible(true);
-				chapterview.repaint();
+				
 			}
 			
 				
