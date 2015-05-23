@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.TitlePaneLayout;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,6 +30,7 @@ public class Render {
 	private int choosedSub;	//현재 선책한 과목의 번호 
 	private int choosedChp; //현재 선택한 과목의 챕터 번호
 	private int choosedNum; //현재 선택한 과목의 챕터의 문제 번호
+	private JLabel chaptertitle;
 	private String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
 	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
@@ -40,6 +42,7 @@ public class Render {
 		scoreview=new JFrame();
 		aboutview=new JFrame();
 		chapterview=new JFrame();
+		chaptertitle=new JLabel();
 		posX=500;
 		posY=150;
 		//점수 배열 할당 및 초기화
@@ -527,13 +530,29 @@ public class Render {
 		title.setLayout(null);
 		
 		JLabel titlelabel = new JLabel();
+		if(titlelabel.getName()=="titlelabel");
+			titlelabel.setForeground(Color.RED);
 		titlelabel.setName("titlelabel");
 		titlelabel.setSize(500,50);
 		titlelabel.setForeground(Color.decode("#FFFFFF"));
 		titlelabel.setLocation(100,32);
 		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
 		System.out.println(Subject[choosedSub]);
-		titlelabel.setText(titlelabel.getText()+Subject[choosedSub]);
+		titlelabel.setVisible(true);
+		System.out.println(titlelabel.getText());
+		titlelabel.setText((Subject[choosedSub]).toString().toString());
+		
+		/*
+		chaptertitle.setText(Subject[choosedSub]);
+		chaptertitle.setSize(500,50);
+		chaptertitle.setForeground(Color.decode("#FFFFFF"));
+		chaptertitle.setLocation(100,32);
+		chaptertitle.setFont(new Font("맑은 고딕",Font.BOLD,32));
+		chaptertitle.setVisible(true);
+		System.out.println(choosedSub);
+		System.out.println(chaptertitle.getText());
+		chaptertitle.repaint();
+		*/
 		//TODO: problem occurred
 		
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
@@ -549,6 +568,8 @@ public class Render {
 		title.add(exiticon);
 		title.add(backicon);
 		paper.add(title);
+		//chapterview.add(titlelabel);
+		//chapterview.add(chaptertitle);
 		chapterview.add(paper);
 		
 	}
@@ -830,7 +851,7 @@ public class Render {
 				case 5:
 					playmenu.setLocation(posX,posY);
 					playmenu.setVisible(true);
-					chapterview.dispose();
+					chapterview.setVisible(false);
 					level=2;
 				default:
 					break;
@@ -890,13 +911,13 @@ public class Render {
 			if(chapterview.getName()!="chapterviewdeclared")
 			{				
 				drawchapterview();
-				chapterview.setName("");
 			}
 			else
 			{
 				//TODO:: update jlabel
 				chapterview.revalidate();
-				chapterview.setVisible(true);				
+				chapterview.setVisible(true);
+				chapterview.repaint();
 			}
 			
 				
