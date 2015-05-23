@@ -24,8 +24,10 @@ public class Render {
 	private int posX,posY;		//화면이 움직일때 사용되는 좌표값
 	private int score[][];		//점수를 저장할 배열
 	private int accuracy[];	//과목당 정확도
-	private int choosedSub;
+	private int choosedSub;	//현재 선책한 과목의 번호 
 	private int achievement[];	//진행상황
+	private int chapters[][];   //챕터의 수를 가진 배열
+	private int choosedChp; //현재 선택한 과목의 챕터 번호
 	String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
 	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
@@ -248,15 +250,15 @@ public class Render {
 		title.setVisible(true);
 		title.setLayout(null);
 		title.setBackground(Color.decode("#00BCD4"));
-		title.setSize(width, 210);
+		title.setSize(width, 100);
 		title.setLocation(0,0);
 		
 		JLabel titlename=new JLabel("Credit + About");
 		titlename.setVisible(true);
-		titlename.setFont(new Font("맑은 고딕",Font.BOLD,42));
+		titlename.setFont(new Font("맑은 고딕",Font.BOLD,32));
 		titlename.setForeground(Color.decode("#FFFFFF"));
-		titlename.setBounds(75, 130, 400, 70);
-		
+		titlename.setBounds(100, 32, 400, 50);
+				
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
 		exiticon.addMouseListener(new ExitButton());
@@ -268,7 +270,7 @@ public class Render {
 		
 		PaperPanel about = new PaperPanel(600,250);
 		about.setBackground(Color.decode("#fafafa"));
-		about.setLocation(0,200);
+		about.setLocation(0,100);
 		about.setLayout(null);
 		
 		JPanel aboutpanel = new JPanel();
@@ -300,7 +302,7 @@ public class Render {
 		
 		PaperPanel credit = new PaperPanel(600,250);
 		credit.setBackground(Color.decode("#fafafa"));
-		credit.setLocation(0,450);
+		credit.setLocation(0,350);
 		credit.setLayout(null);
 		
 		IconPanel crediticon = new IconPanel(".\\images\\credit.png",45,45);
@@ -400,14 +402,6 @@ public class Render {
 		title.setLocation(0,0);
 		title.setLayout(null);
 		
-		/*
-		JPanel introduction = new JPanel();
-		introduction.setBackground(Color.WHITE);
-		introduction.setSize(width,170);
-		introduction.setLocation(0,100);
-		*/
-		
-				
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
 		exiticon.addMouseListener(new ExitButton());
@@ -673,6 +667,7 @@ public class Render {
 		paper.add(titlecontainer);
 		mainframe.add(paper);
 	}
+	//TODO:: events
 	class Clickcolor extends MouseAdapter{
 		@Override
 		public void mousePressed(MouseEvent e)
