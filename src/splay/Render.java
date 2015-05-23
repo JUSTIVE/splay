@@ -1,20 +1,16 @@
 package splay;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.Label;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.RepaintManager;
+import javax.swing.SwingUtilities;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.HashMap;
-import java.util.Map;
 public class Render {
 	//각각의 액티비티별로 프레임을 구성한다
 	public JFrame logoframe;	//맨 처음 로고가 나오는 부분
@@ -69,7 +65,7 @@ public class Render {
 		drawlogos();
 		logoframe.repaint();
 	}
-//inital start screen
+//Initial start screen
 	public void drawlogos()
 	{
 		logoframe.setUndecorated(true);
@@ -529,34 +525,16 @@ public class Render {
 		title.setSize(width,100);
 		title.setLocation(0,0);
 		title.setLayout(null);
-		/*
 		
-		for(int i=0;i<3;i++)
-		{
-			Integer temp=i;
-			JLabel titlelabel = new JLabel(Subject[i]);
-			titlelabel.setSize(500,50);
-			titlelabel.setForeground(Color.decode("#FFFFFF"));
-			titlelabel.setLocation(100,32);
-			titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
-			titlelabel.setName(temp.toString());
-			if(i==choosedSub)
-				chapterview.add(titlelabel);
-		}res
-		*/
-		//????
-		System.out.println(Subject[choosedSub]);
-		JLabel titlelabel = new JLabel(Subject[choosedSub]);
+		JLabel titlelabel = new JLabel();
 		titlelabel.setName("titlelabel");
 		titlelabel.setSize(500,50);
 		titlelabel.setForeground(Color.decode("#FFFFFF"));
 		titlelabel.setLocation(100,32);
 		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
-		String realtitle=Subject[choosedSub];
-		titlelabel.setText("");
-		System.out.println(realtitle);
-		//titlelabel.setText(Subject[choosedSub]);
-		titlelabel.setText(realtitle);
+		System.out.println(Subject[choosedSub]);
+		titlelabel.setText(titlelabel.getText()+Subject[choosedSub]);
+		//TODO: problem occurred
 		
 		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
 		exiticon.setLocation(520,37);
@@ -567,7 +545,7 @@ public class Render {
 		backicon.addMouseListener(new BackMenu());
 				
 		title.add(notibar);
-		chapterview.add(titlelabel);
+		title.add(titlelabel);
 		title.add(exiticon);
 		title.add(backicon);
 		paper.add(title);
@@ -792,7 +770,7 @@ public class Render {
 				btn.setBackground(new Color(0,0,0,0));
 				btn.repaint();
 				//TODO:add another asking windows
-								
+					
 				JFrame target=new JFrame();
 				switch(level)
 				{
@@ -834,19 +812,19 @@ public class Render {
 				case 2:
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);				
-					playmenu.dispose();
+					playmenu.setVisible(false);
 					level=1;
 					break;
 				case 3:
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);
-					scoreview.dispose();
+					scoreview.setVisible(false);
 					level=1;
 					break;
 				case 4:
 					mainframe.setLocation(posX,posY);
 					mainframe.setVisible(true);
-					aboutview.dispose();
+					aboutview.setVisible(false);
 					level=1;
 					break;
 				case 5:
@@ -909,13 +887,16 @@ public class Render {
 			chapterview.setLocation(posX,posY);
 			playmenu.setVisible(false);
 			level=5;
-			System.out.println(choosedSub);
-
-			
-			if(chapterview.getName()!="chapterviewdeclared"){
+			if(chapterview.getName()!="chapterviewdeclared")
+			{				
 				drawchapterview();
-				chapterview.revalidate();
 				chapterview.setName("");
+			}
+			else
+			{
+				//TODO:: update jlabel
+				chapterview.revalidate();
+				chapterview.setVisible(true);				
 			}
 			
 				
@@ -1069,5 +1050,8 @@ public class Render {
 			posX=target.getLocation().x;
 			posY=target.getLocation().y;
 		}
+	}
+	public void updateUI(JLabel input){
+		SwingUtilities.updateComponentTreeUI(input);
 	}
 }
