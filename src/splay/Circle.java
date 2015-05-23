@@ -18,13 +18,14 @@ public class Circle extends JPanel{
 		this.color=color;
 		bcolor=new Color(0,0,0,0);
 		repaint();
+		setOpaque(false);
 	}
 	public Circle(Color color,int width,int height)
 	{
 		this.width=width;
 		this.height=height;
 		this.color=color;
-		bcolor=new Color(0,0,0,0);
+		//bcolor=new Color(0,0,0,0);
 		repaint();
 	}
 	public Circle(Color color,int width,int height,Color bcolor)
@@ -43,12 +44,14 @@ public class Circle extends JPanel{
 	public void paintComponent(Graphics graphics)
 	{
 		//super.paintComponent(graphics);
+		//graphics.setColor(getBackground());
+		setOpaque(false);
 		graphics.fillOval(0,0, width, height);
 		//Graphics2D ga=(Graphics2D)graphics;
 		//ga.setRenderingHint( RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	    //ga.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 		setForeground(color);
-		setBackground(bcolor);
+		//setBackground(bcolor);
 		//super.paintComponent(ga);
 	}
 }

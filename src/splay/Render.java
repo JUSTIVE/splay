@@ -17,18 +17,23 @@ public class Render {
 	public JFrame mainframe;	//메인 메뉴가 있는 프레임
 	public JFrame playmenu;		//실행 화면이 있는 프레임
 	public JFrame scoreview;	//스코어를 볼 수 있는 프레임
-	public JFrame aboutview;
+	public JFrame aboutview;	
+	public JFrame chapterview; 	//
 	private int width=600;		//전체 프레임의 폭
 	private int height=800;		//전체 프레임의 높이
 	private int level;			//현재 실행중인 프레임의 번호
 	private int posX,posY;		//화면이 움직일때 사용되는 좌표값
 	private int score[][];		//점수를 저장할 배열
 	private int accuracy[];	//과목당 정확도
-	private int choosedSub;	//현재 선책한 과목의 번호 
 	private int achievement[];	//진행상황
 	private int chapters[][];   //챕터의 수를 가진 배열
+	private int choosedSub;	//현재 선책한 과목의 번호 
 	private int choosedChp; //현재 선택한 과목의 챕터 번호
-	String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
+	private int choosedNum; //현재 선택한 과목의 챕터의 문제 번호
+	private String arch[] = {"컴퓨터시스템 개요","CPU의 구조와 기능","컴퓨터 산술과 논리 연산","제어 유니트","기억장치","보조저장장치","시스템 버스,I/O 및 인터럽트","고성능 컴퓨터시스템 구조"};
+	private String Clang[] = {"프로그래밍의 개념","프로그래밍 작성 과정","C프로그래밍 구성 요소","변수와 자료형","수식과 연산자","조건문","반복문","함수","함수와 변수","배열","포인터","문자열","구조체","포인터 활용","전처리 및 비트필드","스트림과 파일 입출력","동적 메모리와 연결리스트"};
+	private String struct[] = {"자료구조와 알고리즘","순환","배열,구조체,포인터","리스트","스택","큐","트리","우선순위 큐","정렬","그래프","해싱","탐색"};
+	private String Subject []= {"컴퓨터 아키텍쳐","자료 구조","C 언어"};//각각의 과목을 저장하는 문자열 배열
 	int Px,Py;
 	Render()// 화면에 데이터를 출력하는 render 클래스의 생성자
 	{
@@ -38,6 +43,7 @@ public class Render {
 		playmenu=new JFrame();
 		scoreview=new JFrame();
 		aboutview=new JFrame();
+		chapterview=new JFrame();
 		posX=500;
 		posY=150;
 		//점수 배열 할당 및 초기화
@@ -53,6 +59,8 @@ public class Render {
 		accuracy=new int[3];
 		for(int i=0;i<3;i++)
 			accuracy[i]=0;
+		chapters=new int[3][50];
+		
 		
 	}
 
@@ -288,17 +296,11 @@ public class Render {
 		aboutlabel.setLocation(100,30);
 		
 		
-		String x = "이 프로그램은 사용자의 학습능력을 도와주는";
-		String x2 = "학습 프로그램 입니다.";
+		String x = "<html>이 프로그램은 사용자의 학습능력을 도와주는<br>학습 프로그램 입니다.</html>";
 		JLabel aboutinsert = new JLabel(x);
 		aboutinsert.setSize(800,100);
 		aboutinsert.setFont(new Font("맑은 고딕",Font.PLAIN,25));
 		aboutinsert.setLocation(30,80);
-		
-		JLabel aboutinsert2 = new JLabel(x2);
-		aboutinsert2.setSize(800,100);
-		aboutinsert2.setFont(new Font("맑은 고딕",Font.PLAIN,25));
-		aboutinsert2.setLocation(30,120);
 		
 		PaperPanel credit = new PaperPanel(600,250);
 		credit.setBackground(Color.decode("#fafafa"));
@@ -309,7 +311,7 @@ public class Render {
 		crediticon.setLocation(12,12);
 		
 				
-		String credits[] = {"Credit", "20144575 김민상","20144592 이기백","20144564 김민기"};
+		String credits[] = {"Credit", "<html>20144575 김민상<br>20144592 이기백<br>20144564 김민기"};
 				
 		JPanel creditpanel = new JPanel();
 		creditpanel.setBackground(Color.decode("#00BCD2"));
@@ -326,31 +328,18 @@ public class Render {
 		JLabel creaditinsert = new JLabel(credits[1]);
 		creaditinsert.setSize(800,100);
 		creaditinsert.setFont(new Font("맑은 고딕",Font.PLAIN,25));
-		creaditinsert.setLocation(30,80);
-		
-		JLabel creaditinsert2 = new JLabel(credits[2]);
-		creaditinsert2.setSize(800,100);
-		creaditinsert2.setFont(new Font("맑은 고딕",Font.PLAIN,25));
-		creaditinsert2.setLocation(30,120);
-		
-		JLabel creaditinsert3 = new JLabel(credits[3]);
-		creaditinsert3.setSize(800,100);
-		creaditinsert3.setFont(new Font("맑은 고딕",Font.PLAIN,25));
-		creaditinsert3.setLocation(30,160);
+		creaditinsert.setLocation(30,100);
 		
 		//TODO:: about adding
 		
 		aboutpanel.add(abouticon);
 		about.add(aboutlabel);
 		about.add(aboutpanel);
-		about.add(aboutinsert2);
 		about.add(aboutinsert);
 		
 		creditpanel.add(crediticon);
 		credit.add(creditpanel);
 		credit.add(creaditinsert);
-		credit.add(creaditinsert2);
-		credit.add(creaditinsert3);
 		
 		title.add(titlename);
 		title.add(notibar);
@@ -419,15 +408,24 @@ public class Render {
 		PaperPanel item1=new PaperPanel(width, 170, 3);
 		item1.setLocation(0,100);
 		PaperPanel item2=new PaperPanel(width, 170, 3);
-		item2.setLocation(0,270);
+		item2.setLocation(0,273);
 		PaperPanel item3=new PaperPanel(width, 170, 3);
-		item3.setLocation(0,440);
-		
+		item3.setLocation(0,446);
+				
 		select menu1 = new select(0, 500, Subject[0],Color.decode("#00bcd4"));
+		menu1.setName("SUB1");
+		menu1.addMouseListener(new Clickcolorgray());
+		menu1.addMouseListener(new subtochp());
 		menu1.setLocation(0,0);
 		select menu2 = new select(0, 500, Subject[1],Color.decode("#00bcd4"));
+		menu2.setName("SUB2");
+		menu2.addMouseListener(new Clickcolorgray());
+		menu2.addMouseListener(new subtochp());
 		menu2.setLocation(0,0);
 		select menu3 = new select(0, 500, Subject[2],Color.decode("#00bcd4"));
+		menu3.setName("SUB3");
+		menu3.addMouseListener(new Clickcolorgray());
+		menu3.addMouseListener(new subtochp());
 		menu3.setLocation(0,0);
 				
 		IconPanel menu1icon=new IconPanel(".\\images\\item1.png",45,45,Color.decode("#AFAFAF"));
@@ -499,6 +497,60 @@ public class Render {
 		paper.add(item3);
 		
 		playmenu.add(paper);
+		
+	}
+	public void drawchapterview(int chapternunber)
+	{
+		chapterview.setName("chapterviewdeclared");
+		chapterview.setUndecorated(true);
+		chapterview.setResizable(false);
+		chapterview.setVisible(true);
+		chapterview.getContentPane().setLayout(null);
+		chapterview.setSize(width, height);
+		chapterview.setLocation(posX,posY);
+		chapterview.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel paper=new JPanel();
+		paper.setVisible(true);
+		paper.setLayout(null);
+		paper.setSize(width, height);
+		paper.setBackground(Color.decode("#FAFAFA"));
+		paper.setLocation(0, 0);
+		
+		JPanel notibar=new JPanel();
+		notibar.addMouseListener(new Moveframe());
+		notibar.addMouseMotionListener(new Movingframe());
+		notibar.setVisible(true);
+		notibar.setBackground(new Color(0,0,0,77));
+		notibar.setSize(width, 20);
+		notibar.setLocation(0,0);
+		
+		JPanel title = new JPanel();
+		title.setBackground(Color.decode("#00BCD4"));
+		title.setSize(width,100);
+		title.setLocation(0,0);
+		title.setLayout(null);
+		
+		JLabel titlelabel = new JLabel("SCORE");
+		titlelabel.setSize(200,50);
+		titlelabel.setForeground(Color.decode("#FFFFFF"));
+		titlelabel.setLocation(100,32);
+		titlelabel.setFont(new Font("맑은 고딕",Font.BOLD,32));
+		
+		IconPanel exiticon=new IconPanel(".\\images\\exit.png",45,45,Color.decode("#00BCD4"));
+		exiticon.setLocation(520,37);
+		exiticon.addMouseListener(new ExitButton());
+		
+		IconPanel backicon=new IconPanel(".\\images\\back.png",45,45,Color.decode("#00BCD4"));
+		backicon.setLocation(20,37);
+		backicon.addMouseListener(new BackMenu());
+		
+		title.add(notibar);
+		title.add(titlelabel);
+		title.add(exiticon);
+		title.add(backicon);
+		paper.add(title);
+		chapterview.add(paper);
 		
 	}
 	public void drawmain()
@@ -683,6 +735,20 @@ public class Render {
 			play.setBackground(Color.decode("#D4E157"));
 		}
 	}
+	class Clickcolorgray extends MouseAdapter{
+		public void mousePressed(MouseEvent e)
+		{
+			JPanel play=(JPanel)e.getSource();
+			play.setBackground(Color.decode("#F5F5F5"));
+		}
+		
+		@Override
+		public void mouseReleased(MouseEvent e)
+		{
+			JPanel play=(JPanel)e.getSource();
+			play.setBackground(Color.decode("#FFFFFF"));
+		}
+	}
 	class ClickcolorCircleExit extends MouseAdapter{
 		@Override
 		public void mousePressed(MouseEvent e)
@@ -722,6 +788,53 @@ public class Render {
 				target.dispose();
 				System.exit(1);
 			}
+			else
+			{
+				Circle btn=(Circle)e.getSource();
+				btn.SetColor(Color.decode("#CDDC39"));
+				btn.repaint();
+			}
+		}
+		@Override
+		public void mouseExited(MouseEvent e)
+		{
+			Circle btn=(Circle)e.getSource();
+			btn.SetColor(Color.decode("#CDDC39"));
+			btn.repaint();
+		}
+		
+	}
+	class BackMenu extends MouseAdapter{
+		public void mouseClicked(MouseEvent e)
+		{
+			switch(level)
+			{
+				case 2:
+					mainframe.setLocation(posX,posY);
+					mainframe.setVisible(true);				
+					playmenu.setVisible(false);
+					level=1;
+					break;
+				case 3:
+					mainframe.setLocation(posX,posY);
+					mainframe.setVisible(true);
+					scoreview.setVisible(false);
+					level=1;
+					break;
+				case 4:
+					mainframe.setLocation(posX,posY);
+					mainframe.setVisible(true);
+					aboutview.setVisible(false);
+					level=1;
+					break;
+				case 5:
+					playmenu.setLocation(posX,posY);
+					playmenu.setVisible(true);
+					chapterview.setVisible(false);
+					level=2;
+				default:
+					break;
+			}
 		}
 	}
 	class ExitButton extends MouseAdapter{
@@ -744,9 +857,42 @@ public class Render {
 				break;
 			case 4:
 				target=aboutview;
+				break;
+			case 5:
+				target=chapterview;
 			}
 			target.dispose();
 			System.exit(1);
+		}
+	}
+	class subtochp extends MouseAdapter
+	{
+		public void mouseClicked(MouseEvent e)
+		{
+			JPanel target=(JPanel)e.getSource();
+			switch (target.getName())
+			{
+			case "SUB1":
+				choosedChp=0;
+				break;
+			case "SUB2":
+				choosedChp=1;
+				break;
+			case "SUB3":
+				choosedChp=2;
+				break;
+			default:
+				break;
+			}
+			chapterview.setLocation(posX,posY);
+			playmenu.setVisible(false);
+			level=5;
+			if(chapterview.getName()!="chapterviewdeclared")
+				drawchapterview(choosedChp);
+			else
+			{
+				chapterview.setVisible(true);
+			}
 		}
 	}
 	class TransScreen extends MouseAdapter{
@@ -806,39 +952,58 @@ public class Render {
 				}
 				break;
 			default:
-				System.out.println("default");
+				break;
 					
 			}
 		}
-	}
-	class BackMenu extends MouseAdapter{
-		public void mouseClicked(MouseEvent e)
-		{
+		public void mouseReleased(MouseEvent e){
 			switch(level)
 			{
-				case 2:
-					mainframe.setLocation(posX,posY);
-					mainframe.setVisible(true);				
-					playmenu.setVisible(false);
-					level=1;
-					break;
-				case 3:
-					mainframe.setLocation(posX,posY);
-					mainframe.setVisible(true);
-					scoreview.setVisible(false);
-					level=1;
-					break;
-				case 4:
-					mainframe.setLocation(posX,posY);
-					mainframe.setVisible(true);
-					aboutview.setVisible(false);
-					level=1;
-					break;
-				default:
-					break;
+			case 1:
+				JPanel target=(JPanel)e.getSource();
+				if(target.getName()=="playbutton")
+				{
+					if(playmenu.getName()!="playmenudeclared")
+						drawplaymenu();
+					else
+					{
+						playmenu.setLocation(posX,posY);
+						playmenu.setVisible(true);
+					}
+					mainframe.setVisible(false);
+					level=2;
+				}
+				else if(target.getName()=="scorebutton")
+				{
+					if(scoreview.getName()!="scoreviewdeclared")
+						drawscoreview();
+					else
+					{
+						scoreview.setLocation(posX,posY);
+						scoreview.setVisible(true);
+					}
+					mainframe.setVisible(false);
+					level=3;
+				}
+				else if(target.getName()=="aboutbutton")
+				{
+					if(aboutview.getName()!="aboutviewdeclared")
+						drawaboutview();
+					else
+					{
+						aboutview.setLocation(posX,posY);
+						aboutview.setVisible(true);
+					}
+					mainframe.setVisible(false);
+					level=4;
+				}
+				break;
+			default:
+				break;
 			}
 		}
 	}
+	
 	class Moveframe extends MouseAdapter{
 		@Override
 		public void mousePressed(MouseEvent e)
@@ -847,6 +1012,7 @@ public class Render {
 			Py=e.getY();
 		}	
 	}
+	
 	class Movingframe extends MouseMotionAdapter{
 		public void mouseDragged(MouseEvent evt)
 		{
@@ -867,6 +1033,9 @@ public class Render {
 				break;
 			case 4:
 				target=aboutview;
+				break;
+			case 5:
+				target=chapterview;
 				break;
 			}
 			target.setLocation(target.getLocation().x+evt.getX()-Px,target.getLocation().y+evt.getY()-Py);
