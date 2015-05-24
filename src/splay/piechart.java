@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class piechart extends JPanel {
-	 
+	Color color;
 	enum Type {
 		STANDARD, SIMPLE_INDICATOR, GRADED_INDICATOR
 	}
@@ -24,10 +24,11 @@ public class piechart extends JPanel {
  
 	double percent = 0; //percent is used for simple indicator and graded indicator
  
-	public piechart(int percent) {
+	public piechart(int percent,Color color) {
  
 		type = Type.SIMPLE_INDICATOR;
 		this.percent = percent;
+		this.color=color;
 	}
  
 	public piechart(ArrayList values, ArrayList colors) {
@@ -59,12 +60,12 @@ public class piechart extends JPanel {
 		if (type == Type.SIMPLE_INDICATOR) {
  
 			//colours used for simple indicator
-			Color backgroundColor = Color.WHITE;
+			Color backgroundColor = Color.decode("#F5F5f5");
 			Color mainColor = Color.BLUE;
  
 			g2d.setColor(backgroundColor);
 			g2d.fillOval(0, 0, width, width);
-			g2d.setColor(mainColor);
+			g2d.setColor(color);
 			Double angle = (percent / 100) * 360;
 			g2d.fillArc(0, 0, width, width, -270, -angle.intValue());
  

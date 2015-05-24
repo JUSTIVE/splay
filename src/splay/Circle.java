@@ -41,18 +41,32 @@ public class Circle extends JPanel{
 		this.color=c;
 		//repaint();
 	}
+	/*
+	public void paint(Graphics g)
+	{
+		g.setColor(color);
+		Graphics2D ga=(Graphics2D)g;
+		ga.setRenderingHint( RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		g.fillOval(0,0, width, height);
+		
+	}
+	*/
 	public void paintComponent(Graphics graphics)
 	{
+		
 		//super.paintComponent(graphics);
 		//graphics.setColor(getBackground());
-		setOpaque(false);
+		super.paintComponent(graphics);
+		super.setBackground(new Color(0,0,0,0));
+		
+		Graphics2D ga=(Graphics2D)graphics;
+		ga.setRenderingHint( RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics.fillOval(0,0, width, height);
-		//Graphics2D ga=(Graphics2D)graphics;
-		//ga.setRenderingHint( RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	    //ga.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 		setForeground(color);
 		//setBackground(bcolor);
 		//super.paintComponent(ga);
+		
 	}
 }
 class CirclePanel extends JPanel
