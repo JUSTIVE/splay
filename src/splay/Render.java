@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import splay.piechart.Type;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -479,6 +481,7 @@ public class Render {
 		allover.add(java);
 		logoframe.add(allover);
 	}
+	@SuppressWarnings("serial")
 	public void drawscoreview()
 	{
 		scoreview.setName("scoreviewdeclared");
@@ -562,16 +565,75 @@ public class Render {
 		ach3.setSize(100,30);
 		ach3.setLocation(490, 10);
 		
-		piechart sub1=new piechart((int)((accuracy[0]/CurrentNum[0])*100),Color.decode("#CDDC39"));
+		piechart sub1;
+		sub1=new piechart((int)((accuracy[0]/CurrentNum[0])*100),Color.decode("#CDDC39"))
+		{
+			protected void paintComponent(Graphics g) {
+				
+				int width = getSize().width;
+		 
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, // Anti-alias!
+						RenderingHints.VALUE_ANTIALIAS_ON);
+		 
+					 
+					//colours used for simple indicator
+					Color backgroundColor = Color.decode("#F5F5f5");
+					g2d.setColor(backgroundColor);
+					g2d.fillOval(0, 0, width, width);
+					g2d.setColor(color);
+					Double angle = (double) ((((accuracy[0]/CurrentNum[0])*100)/ 100) * 360);
+					g2d.fillArc(0, 0, width, width, -270, -angle.intValue());
+				}
+		};
 		sub1.setVisible(true);
 		sub1.setBounds(480,40,80,80);
-		piechart sub2=new piechart((int)((accuracy[1]/CurrentNum[1])*100),Color.decode("#CDDC39"));
-		sub2.setVisible(true);
-		sub2.setBounds(480,40,80,80);
-		piechart sub3=new piechart((int)((accuracy[2]/CurrentNum[2])*100),Color.decode("#CDDC39"));
+			
+		piechart sub2;
+		sub2=new piechart((int)((accuracy[1]/CurrentNum[1])*100),Color.decode("#CDDC39"))
+		{
+			protected void paintComponent(Graphics g) {
+				
+				int width = getSize().width;
+		 
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, // Anti-alias!
+						RenderingHints.VALUE_ANTIALIAS_ON);
+		 
+					//colours used for simple indicator
+					Color backgroundColor = Color.decode("#F5F5f5");
+					g2d.setColor(backgroundColor);
+					g2d.fillOval(0, 0, width, width);
+					g2d.setColor(color);
+					Double angle = (double) ((((accuracy[1]/CurrentNum[1])*100)/ 100) * 360);
+					g2d.fillArc(0, 0, width, width, -270, -angle.intValue());
+				}
+		};
 		sub2.setVisible(true);
 		sub2.setBounds(480,40,80,80);
 		
+		piechart sub3;
+		sub3=new piechart((int)((accuracy[2]/CurrentNum[2])*100),Color.decode("#CDDC39"))
+		{
+			protected void paintComponent(Graphics g) {
+				
+				int width = getSize().width;
+		 
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, // Anti-alias!
+						RenderingHints.VALUE_ANTIALIAS_ON);
+		 
+					//colours used for simple indicator
+					Color backgroundColor = Color.decode("#F5F5f5");
+					g2d.setColor(backgroundColor);
+					g2d.fillOval(0, 0, width, width);
+					g2d.setColor(color);
+					Double angle = (double) ((((accuracy[2]/CurrentNum[2])*100)/ 100) * 360);
+					g2d.fillArc(0, 0, width, width, -270, -angle.intValue());
+				}
+		};
+		sub3.setVisible(true);
+		sub3.setBounds(480,40,80,80);		
 		
 		//TODO:: scoreadding
 		menu1.add(ach1);
@@ -584,8 +646,8 @@ public class Render {
 		title.add(notibar);
 		
 		menu1.add(sub1);
-		menu1.add(sub2);
-		menu1.add(sub3);
+		menu2.add(sub2);
+		menu3.add(sub3);
 		
 		menu1.add(menu1icon);
 		menu2.add(menu2icon);
